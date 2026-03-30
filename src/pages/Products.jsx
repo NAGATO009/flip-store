@@ -9,7 +9,8 @@ import { getProducts, addProduct } from '../services/api';
 
 const Products = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -58,9 +59,9 @@ const Products = () => {
   ];
 
   return (
-    <Box sx={{ p: { xs: 2, md: 4 } }}>
+    <Box sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
-        <Typography variant="h4" fontWeight="700" sx={{ fontSize: { xs: '1.5rem', md: '2rem' } }}>Inventory</Typography>
+        <Typography variant="h4" fontWeight="700" sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }}>Inventory</Typography>
         <Button variant="contained" startIcon={<AddIcon />} onClick={() => setOpen(true)} sx={{ width: { xs: '100%', sm: 'auto' } }}>
           New Product
         </Button>
@@ -98,8 +99,8 @@ const Products = () => {
           <DataGrid
             rows={products}
             columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            pageSize={isTablet ? 5 : 10}
+            rowsPerPageOptions={isTablet ? [5] : [10]}
             getRowId={(row) => row._id}
             disableSelectionOnClick
             sx={{ border: 0 }}
@@ -107,7 +108,7 @@ const Products = () => {
         </Box>
       )}
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={() => setOpen(false)} fullScreen={isMobile}>
         <DialogTitle>Add New Product</DialogTitle>
         <DialogContent sx={{ minWidth: { xs: 'auto', sm: 400 } }}>
           <TextField 
@@ -127,9 +128,9 @@ const Products = () => {
             onChange={(e) => setNewProduct({...newProduct, price: parseFloat(e.target.value)})}
           />
         </DialogContent>
-        <DialogActions sx={{ p: 3, flexDirection: { xs: 'column', sm: 'row' }, gap: 1 }}>
-          <Button onClick={() => setOpen(false)} fullWidth sx={{ order: { xs: 2, sm: 1 } }}>Cancel</Button>
-          <Button variant="contained" onClick={handleSave} disabled={!newProduct.title} fullWidth sx={{ order: { xs: 1, sm: 2 } }}>Save Product</Button>
+        <DialogActions sx={{ p: 3 }}>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleSave} disabled={!newProduct.title}>Save Product</Button>
         </DialogActions>
       </Dialog>
     </Box>
