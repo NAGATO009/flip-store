@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipCard Store - Premium Shopping Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="site-header" id="mainHeader">
+        <div class="header-content">
+            <a href="#" class="logo" onclick="navigateTo('home')">
+                <span class="logo-icon">◈</span>
+                <span class="logo-text">FlipCard</span>
+                <span class="logo-lite">Store</span>
+            </a>
+
+            <div class="header-search">
+                <div class="search-bar" id="searchBar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search products..." id="searchInput"
+                        oninput="handleSearch(this.value)">
+                    <button class="search-close" onclick="clearSearch()">✕</button>
+                </div>
+                <button class="search-toggle" onclick="toggleSearch()">🔍</button>
+            </div>
+
+            <nav class="main-nav">
+                <a href="#" class="nav-link" onclick="navigateTo('home')">Home</a>
+                <a href="#" class="nav-link" onclick="navigateTo('catalog')">Catalog</a>
+                <a href="#" class="nav-link" onclick="navigateTo('wishlist')">Wishlist</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="category-dropdown" id="categoryDropdown">
+                    <button class="category-btn" onclick="toggleCategoryMenu()">
+                        <span class="category-icon">☰</span>
+                        <span class="category-label">Categories</span>
+                        <span class="category-arrow">▼</span>
+                    </button>
+                    <div class="category-menu" id="categoryMenu"></div>
+                </div>
+
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+
+                <button class="cart-btn" onclick="openCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+
+                <div class="user-menu" id="userMenu">
+                    <button class="user-avatar" onclick="handleUserClick()" id="userAvatarBtn">
+                        <span id="userAvatarIcon">👤</span>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info" id="userInfoSection" style="display: none;">
+                            <p class="user-name" id="userName">John Doe</p>
+                            <p class="user-email" id="userEmail">john@example.com</p>
+                        </div>
+                        <a href="#" onclick="navigateTo('login')" class="user-option" id="loginOption">Sign In</a>
+                        <a href="#" onclick="navigateTo('register')" class="user-option" id="registerOption">Create
+                            Account</a>
+                        <a href="#" onclick="navigateTo('profile')" class="user-option" id="profileOption"
+                            style="display: none;">My Profile</a>
+                        <a href="#" onclick="handleLogout()" class="user-option" id="logoutOption"
+                            style="display: none;">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <!-- Home Page -->
+        <div id="homePage" class="page">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Discover <span class="accent">Amazing Products</span></h1>
+                    <p class="hero-subtitle">Explore our curated collection of premium items with interactive flipcards
+                    </p>
+                    <a href="#" class="hero-btn" onclick="navigateTo('catalog')">
+                        Browse Catalog
+                        <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <img src="https://placehold.co/300x400/1a1a24/ff6b35?text=Premium" alt="Product">
+                                <span class="card-label">Featured</span>
+                            </div>
+                            <div class="card-back">
+                                <h3>Premium Quality</h3>
+                                <p>Top-rated products</p>
+                                <span class="price">$299+</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-card hero-card-2">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <img src="https://placehold.co/300x400/1a1a24/00d4aa?text=New" alt="Product">
+                                <span class="card-label">New Arrivals</span>
+                            </div>
+                            <div class="card-back">
+                                <h3>Latest Collection</h3>
+                                <p>Fresh arrivals daily</p>
+                                <span class="price">Shop Now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <span class="feature-icon">🚀</span>
+                    <h3>Fast Delivery</h3>
+                    <p>Free shipping on orders over $50</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🛡️</span>
+                    <h3>Secure Payment</h3>
+                    <p>100% secure checkout</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">↩️</span>
+                    <h3>Easy Returns</h3>
+                    <p>30-day return policy</p>
+                </div>
+            </section>
+
+            <section class="categories-section">
+                <h2>Shop by Category</h2>
+                <div class="categories-grid" id="homeCategoriesGrid"></div>
+            </section>
+        </div>
+
+        <!-- Login Page -->
+        <div id="loginPage" class="page auth-page" style="display: none;">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h1>Welcome Back</h1>
+                    <p class="auth-subtitle">Sign in to your account</p>
+
+                    <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" required placeholder="Enter your email">
+                            <span class="error-message" id="loginEmailError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required placeholder="Enter your password">
+                            <span class="error-message" id="loginPasswordError"></span>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkbox-custom"></span>
+                                Remember me
+                            </label>
+                            <a href="#" onclick="navigateTo('forgot')" class="forgot-link">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="auth-btn">Sign In</button>
+                    </form>
+
+                    <div class="social-login">
+                        <p>Or continue with</p>
+                        <div class="social-buttons">
+                            <button class="social-btn google" onclick="socialLogin('google')">
+                                <span>🔵</span> Google
+                            </button>
+                            <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                                <span>🔵</span> Facebook
+                            </button>
+                            <button class="social-btn github" onclick="socialLogin('github')">
+                                <span>⚫</span> GitHub
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="auth-switch">Don't have an account? <a href="#" onclick="navigateTo('register')">Sign
+                            up</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="registerPage" class="page auth-page" style="display: none;">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h1>Create Account</h1>
+                    <p class="auth-subtitle">Join us and start shopping</p>
+
+                    <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label for="registerName">Full Name</label>
+                            <input type="text" id="registerName" required placeholder="Enter your full name">
+                            <span class="error-message" id="registerNameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" required placeholder="Enter your email">
+                            <span class="error-message" id="registerEmailError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" required placeholder="Create a password"
+                                oninput="checkPasswordStrength(this.value)">
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="strengthFill"></div>
+                                </div>
+                                <span class="strength-text" id="strengthText"></span>
+                            </div>
+                            <span class="error-message" id="registerPasswordError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerConfirmPassword">Confirm Password</label>
+                            <input type="password" id="registerConfirmPassword" required
+                                placeholder="Confirm your password">
+                            <span class="error-message" id="registerConfirmPasswordError"></span>
+                        </div>
+
+                        <button type="submit" class="auth-btn">Create Account</button>
+                    </form>
+
+                    <p class="auth-switch">Already have an account? <a href="#" onclick="navigateTo('login')">Sign
+                            in</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forgot Password Page -->
+        <div id="forgotPage" class="page auth-page" style="display: none;">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h1>Reset Password</h1>
+                    <p class="auth-subtitle">Enter your email to receive reset instructions</p>
+
+                    <form class="auth-form" id="forgotForm" onsubmit="handleForgotPassword(event)">
+                        <div class="form-group">
+                            <label for="forgotEmail">Email</label>
+                            <input type="email" id="forgotEmail" required placeholder="Enter your email">
+                            <span class="error-message" id="forgotEmailError"></span>
+                        </div>
+
+                        <button type="submit" class="auth-btn">Send Reset Link</button>
+                    </form>
+
+                    <p class="auth-switch">Remember your password? <a href="#" onclick="navigateTo('login')">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profilePage" class="page profile-page" style="display: none;">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">👤</div>
+                    <h1 id="profileName">User</h1>
+                    <p id="profileEmail">user@example.com</p>
+                </div>
+
+                <div class="profile-content">
+                    <div class="profile-section">
+                        <h2>Account Information</h2>
+                        <div class="profile-field">
+                            <label>Full Name</label>
+                            <input type="text" id="profileNameInput" value="">
+                        </div>
+                        <div class="profile-field">
+                            <label>Email</label>
+                            <input type="email" id="profileEmailInput" value="">
+                        </div>
+                        <button class="profile-btn" onclick="updateProfile()">Update Profile</button>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Order History</h2>
+                        <p class="no-orders">No orders yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catalog Page -->
+        <div id="catalogPage" class="page catalog-page" style="display: none;">
+            <div class="catalog-header">
+                <div class="catalog-title">
+                    <h1>Product Catalog</h1>
+                    <p id="productCount">Showing 110 products</p>
+                </div>
+
+                <div class="catalog-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn active" onclick="setViewMode('grid')" title="Grid view">
+                            <span>▦</span>
+                        </button>
+                        <button class="view-btn" onclick="setViewMode('list')" title="List view">
+                            <span>☰</span>
+                        </button>
+                    </div>
+
+                    <div class="sort-dropdown">
+                        <select id="sortSelect" onchange="handleSort(this.value)">
+                            <option value="default">Sort by: Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Highest Rated</option>
+                            <option value="newest">Newest</option>
+                            <option value="name">Name: A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="catalog-layout">
+                <aside class="filter-sidebar" id="filterSidebar">
+                    <div class="filter-section">
+                        <h3>Categories</h3>
+                        <div class="filter-options" id="categoryFilters"></div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Price Range</h3>
+                    <div class="price-range">
+                        <input type="number" id="minPrice" placeholder="Min" min="0">
+                        <span>-</span>
+                        <input type="number" id="maxPrice" placeholder="Max" min="0">
+                    </div>
+                        <button class="filter-btn" onclick="applyPriceFilter()">Apply</button>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Rating</h3>
+                        <div class="filter-options" id="ratingFilters">
+                            <label class="filter-option">
+                                <input type="checkbox" value="4.5" onchange="applyFilters()">
+                                <span>⭐⭐⭐⭐⭐ 4.5+</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="4" onchange="applyFilters()">
+                                <span>⭐⭐⭐⭐ 4.0+</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="3.5" onchange="applyFilters()">
+                                <span>⭐⭐⭐ 3.5+</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Availability</h3>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" id="inStockFilter" onchange="applyFilters()">
+                                <span>In Stock Only</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="clear-filters-btn" onclick="clearFilters()">Clear All Filters</button>
+                </aside>
+
+                <div class="catalog-main">
+                    <div class="autocomplete-suggestions" id="autocompleteSuggestions"></div>
+                    <div class="products-grid" id="productsGrid"></div>
+
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wishlist Page -->
+        <div id="wishlistPage" class="page wishlist-page" style="display: none;">
+            <div class="wishlist-container">
+                <h1>My Wishlist</h1>
+                <div class="wishlist-grid" id="wishlistGrid">
+                    <p class="empty-message">Your wishlist is empty</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Modal -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2>Shopping Cart</h2>
+            <button class="cart-close" onclick="closeCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Subtotal:</span>
+                <span class="cart-total-price" id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="modal-overlay" id="quickViewModal" onclick="closeQuickView()">
+        <div class="quick-view-modal" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeQuickView()">✕</button>
+            <div class="quick-view-content">
+                <div class="quick-view-image">
+                    <img id="quickViewImage" src="" alt="Product">
+                    <span class="quick-view-badge" id="quickViewBadge"></span>
+                </div>
+                <div class="quick-view-details">
+                    <span class="quick-view-category" id="quickViewCategory"></span>
+                    <h2 id="quickViewName"></h2>
+                    <div class="quick-view-rating">
+                        <span id="quickViewRating"></span>
+                        <span class="rating-count" id="quickViewReviews"></span>
+                    </div>
+                    <p class="quick-view-description" id="quickViewDescription"></p>
+                    <div class="quick-view-specs" id="quickViewSpecs"></div>
+                    <div class="quick-view-price">
+                        <span class="current-price" id="quickViewPrice"></span>
+                        <span class="original-price" id="quickViewOriginalPrice"></span>
+                    </div>
+                    <div class="quick-view-stock" id="quickViewStock"></div>
+                    <div class="quick-view-actions">
+                        <button class="add-to-cart-btn" onclick="addToCartFromQuickView()">Add to Cart</button>
+                        <button class="add-to-wishlist-btn" onclick="addToWishlistFromQuickView()">♡</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal-overlay" id="logoutModal" onclick="closeLogoutModal()">
+        <div class="confirm-modal" onclick="event.stopPropagation()">
+            <h2>Sign Out</h2>
+            <p>Are you sure you want to sign out?</p>
+            <div class="confirm-actions">
+                <button class="confirm-btn cancel" onclick="closeLogoutModal()">Cancel</button>
+                <button class="confirm-btn confirm" onclick="confirmLogout()">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="mainFooter">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="logo" onclick="navigateTo('home')">
+                    <span class="logo-icon">◈</span>
+                    <span class="logo-text">FlipCard</span>
+                    <span class="logo-lite">Store</span>
+                </a>
+                <p>Your premium shopping destination</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <a href="#" onclick="navigateTo('catalog')">All Products</a>
+                    <a href="#" onclick="filterByCategory('Electronics')">Electronics</a>
+                    <a href="#" onclick="filterByCategory('Fashion')">Fashion</a>
+                    <a href="#" onclick="filterByCategory('Home & Kitchen')">Home & Kitchen</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Account</h3>
+                    <a href="#" onclick="navigateTo('profile')">My Profile</a>
+                    <a href="#" onclick="navigateTo('wishlist')">Wishlist</a>
+                    <a href="#" onclick="openCart()">Cart</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Shipping Info</a>
+                    <a href="#">Returns</a>
+                </div>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe for updates and exclusive offers</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+
+            <div class="footer-social">
+                <a href="#" class="social-link">📘</a>
+                <a href="#" class="social-link">📸</a>
+                <a href="#" class="social-link">🐦</a>
+                <a href="#" class="social-link">📺</a>
+            </div>
+
+            <p class="copyright">© 2026 FlipCard Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
