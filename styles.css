@@ -2248,15 +2248,105 @@ main {
     }
 }
 
+.mobile-menu-btn {
+    display: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1.1rem;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.mobile-menu-btn:hover {
+    border-color: var(--accent-primary);
+}
+
+.mobile-menu-btn.active span::before {
+    content: '✕';
+}
+
+.site-header.mobile-nav-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 99;
+    box-shadow: var(--shadow-lg);
+}
+
+.mobile-nav.open {
+    display: flex;
+}
+
+.mobile-nav .nav-link {
+    display: block;
+    padding: 0.875rem 1rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+}
+
+.mobile-nav .nav-link:hover,
+.mobile-nav .nav-link.active {
+    border-color: var(--accent-primary);
+    background: rgba(255, 107, 53, 0.1);
+}
+
 @media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .site-header {
+        position: relative;
+    }
+    
     .header-content {
         padding: 0.75rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.25rem;
     }
     
     .header-search {
         order: 3;
         max-width: 100%;
         flex-basis: 100%;
+        display: none;
+    }
+    
+    .header-search.mobile-search-open {
+        display: block;
     }
     
     .search-bar {
@@ -2272,21 +2362,49 @@ main {
     }
     
     .main-nav {
-        gap: 1rem;
+        display: none;
+    }
+    
+    .header-actions {
+        gap: 0.5rem;
     }
     
     .nav-link {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        padding: 0.5rem 0.25rem;
     }
     
     .category-label {
         display: none;
     }
     
+    .category-btn {
+        padding: 0.5rem 0.625rem;
+    }
+    
+    .category-btn span:first-child {
+        font-size: 1.25rem;
+    }
+    
+    .theme-toggle, .cart-btn {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .user-avatar {
+        width: 38px;
+        height: 38px;
+    }
+    
+    main {
+        padding-top: 0;
+    }
+    
     .hero {
         grid-template-columns: 1fr;
         text-align: center;
         padding: 2rem 1rem;
+        gap: 2rem;
     }
     
     .hero-visual {
@@ -2294,15 +2412,43 @@ main {
     }
     
     .hero-title {
-        font-size: 2.25rem;
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
     }
     
     .features {
         grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+        gap: 1rem;
+    }
+    
+    .feature-card {
+        padding: 1.5rem;
     }
     
     .categories-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .category-card {
+        padding: 1.25rem;
+    }
+    
+    .category-card .category-icon {
+        font-size: 2rem;
+    }
+    
+    .category-card h3 {
+        font-size: 0.9rem;
     }
     
     .catalog-header {
@@ -2310,9 +2456,63 @@ main {
         align-items: flex-start;
     }
     
+    .catalog-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .sort-dropdown select {
+        min-width: 140px;
+        font-size: 0.85rem;
+    }
+    
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 0.75rem;
+    }
+    
+    .product-card-image {
+        height: 140px;
+    }
+    
+    .product-card-content {
+        padding: 0.75rem;
+    }
+    
+    .product-category {
+        font-size: 0.6rem;
+    }
+    
+    .product-name {
+        font-size: 0.85rem;
+        -webkit-line-clamp: 1;
+    }
+    
+    .product-rating {
+        display: none;
+    }
+    
+    .current-price {
+        font-size: 1rem;
+    }
+    
+    .product-stock {
+        font-size: 0.65rem;
+    }
+    
+    .product-actions {
+        flex-direction: column;
+        gap: 0.375rem;
+    }
+    
+    .add-to-cart-btn {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .add-to-wishlist-btn {
+        width: 100%;
+        height: 32px;
     }
     
     .products-grid.list-view .product-card {
@@ -2320,11 +2520,15 @@ main {
     }
     
     .products-grid.list-view .product-card-image {
-        height: 180px;
+        height: 160px;
     }
     
     .auth-card {
         padding: 1.5rem;
+    }
+    
+    .auth-card h1 {
+        font-size: 1.5rem;
     }
     
     .social-buttons {
@@ -2335,17 +2539,86 @@ main {
         width: 100%;
     }
     
+    .quick-view-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-view-image {
+        height: 200px;
+    }
+    
+    .quick-view-details {
+        padding: 1.25rem;
+    }
+    
+    .quick-view-details h2 {
+        font-size: 1.25rem;
+    }
+    
+    .quick-view-price .current-price {
+        font-size: 1.25rem;
+    }
+    
+    .quick-view-actions {
+        flex-direction: column;
+    }
+    
     .footer-links {
         grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-column h3 {
+        font-size: 0.9rem;
+    }
+    
+    .footer-column a {
+        font-size: 0.8rem;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
     }
     
     .toast-container {
         left: 1rem;
         right: 1rem;
+        bottom: 1rem;
     }
     
     .toast {
         min-width: auto;
+    }
+    
+    .profile-page {
+        padding: 1.5rem 1rem;
+    }
+    
+    .profile-header {
+        padding: 2rem 1rem;
+    }
+    
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+    
+    .profile-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .profile-content {
+        padding: 1.5rem;
+    }
+    
+    .wishlist-page {
+        padding: 1.5rem 1rem;
+    }
+    
+    .wishlist-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
     }
 }
 

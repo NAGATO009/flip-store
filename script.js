@@ -221,6 +221,44 @@ function toggleSearch() {
     }
 }
 
+function toggleMobileMenu() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('mobileNav');
+    const header = document.getElementById('mainHeader');
+    
+    if (nav) {
+        if (nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            btn.classList.remove('active');
+            header.classList.remove('mobile-nav-open');
+            document.body.style.overflow = '';
+        } else {
+            nav.classList.add('open');
+            nav.innerHTML = `
+                <a href="#" class="nav-link ${state.currentPage === 'home' ? 'active' : ''}" onclick="navigateTo('home'); closeMobileMenu();">Home</a>
+                <a href="#" class="nav-link ${state.currentPage === 'catalog' ? 'active' : ''}" onclick="navigateTo('catalog'); closeMobileMenu();">Catalog</a>
+                <a href="#" class="nav-link ${state.currentPage === 'wishlist' ? 'active' : ''}" onclick="navigateTo('wishlist'); closeMobileMenu();">Wishlist</a>
+            `;
+            btn.classList.add('active');
+            header.classList.add('mobile-nav-open');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+}
+
+function closeMobileMenu() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('mobileNav');
+    const header = document.getElementById('mainHeader');
+    
+    if (nav && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        btn.classList.remove('active');
+        header.classList.remove('mobile-nav-open');
+        document.body.style.overflow = '';
+    }
+}
+
 // Category Menu
 function toggleCategoryMenu() {
     document.getElementById('categoryDropdown').classList.toggle('open');

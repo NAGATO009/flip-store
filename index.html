@@ -22,7 +22,7 @@
                 <span class="logo-lite">Store</span>
             </a>
 
-            <div class="header-search">
+            <div class="header-search" id="headerSearch">
                 <div class="search-bar" id="searchBar">
                     <span class="search-icon">🔍</span>
                     <input type="text" class="search-input" placeholder="Search products..." id="searchInput"
@@ -32,7 +32,11 @@
                 <button class="search-toggle" onclick="toggleSearch()">🔍</button>
             </div>
 
-            <nav class="main-nav">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+                <span>☰</span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
                 <a href="#" class="nav-link" onclick="navigateTo('home')">Home</a>
                 <a href="#" class="nav-link" onclick="navigateTo('catalog')">Catalog</a>
                 <a href="#" class="nav-link" onclick="navigateTo('wishlist')">Wishlist</a>
@@ -67,15 +71,14 @@
                             <p class="user-email" id="userEmail">john@example.com</p>
                         </div>
                         <a href="#" onclick="navigateTo('login')" class="user-option" id="loginOption">Sign In</a>
-                        <a href="#" onclick="navigateTo('register')" class="user-option" id="registerOption">Create
-                            Account</a>
-                        <a href="#" onclick="navigateTo('profile')" class="user-option" id="profileOption"
-                            style="display: none;">My Profile</a>
-                        <a href="#" onclick="handleLogout()" class="user-option" id="logoutOption"
-                            style="display: none;">Sign Out</a>
+                        <a href="#" onclick="navigateTo('register')" class="user-option" id="registerOption">Create Account</a>
+                        <a href="#" onclick="navigateTo('profile')" class="user-option" id="profileOption" style="display: none;">My Profile</a>
+                        <a href="#" onclick="handleLogout()" class="user-option" id="logoutOption" style="display: none;">Sign Out</a>
                     </div>
                 </div>
             </div>
+
+            <div class="mobile-nav" id="mobileNav"></div>
         </div>
     </header>
 
@@ -85,8 +88,7 @@
             <section class="hero">
                 <div class="hero-content">
                     <h1 class="hero-title">Discover <span class="accent">Amazing Products</span></h1>
-                    <p class="hero-subtitle">Explore our curated collection of premium items with interactive flipcards
-                    </p>
+                    <p class="hero-subtitle">Explore our curated collection of premium items with interactive flipcards</p>
                     <a href="#" class="hero-btn" onclick="navigateTo('catalog')">
                         Browse Catalog
                         <span class="btn-arrow">→</span>
@@ -193,8 +195,7 @@
                         </div>
                     </div>
 
-                    <p class="auth-switch">Don't have an account? <a href="#" onclick="navigateTo('register')">Sign
-                            up</a></p>
+                    <p class="auth-switch">Don't have an account? <a href="#" onclick="navigateTo('register')">Sign up</a></p>
                 </div>
             </div>
         </div>
@@ -221,8 +222,7 @@
 
                         <div class="form-group">
                             <label for="registerPassword">Password</label>
-                            <input type="password" id="registerPassword" required placeholder="Create a password"
-                                oninput="checkPasswordStrength(this.value)">
+                            <input type="password" id="registerPassword" required placeholder="Create a password" oninput="checkPasswordStrength(this.value)">
                             <div class="password-strength" id="passwordStrength">
                                 <div class="strength-bar">
                                     <div class="strength-fill" id="strengthFill"></div>
@@ -234,16 +234,14 @@
 
                         <div class="form-group">
                             <label for="registerConfirmPassword">Confirm Password</label>
-                            <input type="password" id="registerConfirmPassword" required
-                                placeholder="Confirm your password">
+                            <input type="password" id="registerConfirmPassword" required placeholder="Confirm your password">
                             <span class="error-message" id="registerConfirmPasswordError"></span>
                         </div>
 
                         <button type="submit" class="auth-btn">Create Account</button>
                     </form>
 
-                    <p class="auth-switch">Already have an account? <a href="#" onclick="navigateTo('login')">Sign
-                            in</a></p>
+                    <p class="auth-switch">Already have an account? <a href="#" onclick="navigateTo('login')">Sign in</a></p>
                 </div>
             </div>
         </div>
@@ -265,8 +263,7 @@
                         <button type="submit" class="auth-btn">Send Reset Link</button>
                     </form>
 
-                    <p class="auth-switch">Remember your password? <a href="#" onclick="navigateTo('login')">Sign in</a>
-                    </p>
+                    <p class="auth-switch">Remember your password? <a href="#" onclick="navigateTo('login')">Sign in</a></p>
                 </div>
             </div>
         </div>
@@ -342,11 +339,11 @@
 
                     <div class="filter-section">
                         <h3>Price Range</h3>
-                    <div class="price-range">
-                        <input type="number" id="minPrice" placeholder="Min" min="0">
-                        <span>-</span>
-                        <input type="number" id="maxPrice" placeholder="Max" min="0">
-                    </div>
+                        <div class="price-range">
+                            <input type="number" id="minPrice" placeholder="Min" min="0">
+                            <span>-</span>
+                            <input type="number" id="maxPrice" placeholder="Max" min="0">
+                        </div>
                         <button class="filter-btn" onclick="applyPriceFilter()">Apply</button>
                     </div>
 
